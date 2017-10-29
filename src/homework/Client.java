@@ -1,11 +1,13 @@
 package homework;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import org.json.JSONObject;
+import java.util.Map;
 
 /**
  *
@@ -37,7 +39,13 @@ public class Client {
         String line = reader.readLine();
         jSONObject = new JSONObject(line);
 
-        System.out.println("response: " + jSONObject.toString());
+        //System.out.println("response: " + jSONObject.toString());
+
+        //FIXME Hashmap-et így tudsz kiíratni kulcs-érték páronként, csináltuk órán is
+        for (Map.Entry<String, Object> entry : jSONObject.toMap().entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+
+        }
 
         socket.close();
     }

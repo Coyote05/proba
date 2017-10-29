@@ -1,12 +1,13 @@
 package homework;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import org.json.JSONObject;
 
 /**
  *
@@ -53,6 +54,14 @@ public class Server {
 
                     JSONObject containerObject = new JSONObject(line);
 
+
+                    //FIXME A hashmap-nek van olyan metódusa, hogy containsKey(), ezzel meg tudod nézni, hogy tartalmazza
+                    // ha tartalmazza, akkor pedig feltételezem el akarod kérni az adott kulcshoz tartozó értéket. de ez tipp, mert nem írtad
+                    // ahhoz van a get() metódus, ami key alapján visszaadja a value-t
+
+                    if(containerObject.toMap().containsKey("kiscica")){
+
+                    }
                     for (Object key : containerObject.keySet()) {
 
                         if (key.equals("json_object")) {
