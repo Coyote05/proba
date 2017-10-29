@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Map;
 import org.json.JSONObject;
 
 /**
@@ -40,6 +41,13 @@ public class Server {
             int jsonBool = 0;
             int jsonNull = 0;
             int errorCode = 0;
+            int jsonObjectMax = 0;
+            int jsonStringMax = 0;
+            int jsonNumberMax = 0;
+            int jsonArrayMax = 0;
+            int jsonBoolMax = 0;
+            int jsonNullMax = 0;
+            int errorCodeMax = 0;
             String errorMsg = null;
 
             @Override
@@ -51,42 +59,41 @@ public class Server {
 
                     String line = reader.readLine();
 
-                    JSONObject containerObject = new JSONObject(line);
+                    JSONObject jSONObject = new JSONObject(line);
+                    
+                    for (Map.Entry<String, Object> key : jSONObject.toMap().entrySet()) {
 
-                    for (Object key : containerObject.keySet()) {
-
-                        if (key.equals("json_object")) {
+                        if (key.getKey().equals("json_object")) {
 
                             jsonObject++;
                         }
 
-                        if (key.equals("json_string")) {
+                        if (key.getKey().equals("json_string")) {
 
                             jsonString++;
                         }
 
-                        if (key.equals("json_number")) {
+                        if (key.getKey().equals("json_number")) {
 
                             jsonNumber++;
                         }
 
-                        if (key.equals("json_array")) {
+                        if (key.getKey().equals("json_array")) {
 
                             jsonArray++;
                         }
 
-                        if (key.equals("json_bool")) {
+                        if (key.getKey().equals("json_bool")) {
 
                             jsonBool++;
                         }
 
-                        if (key.equals("json_null")) {
+                        if (key.getKey().equals("json_null")) {
 
                             jsonNull++;
                         }
                     }
 
-                    JSONObject jSONObject = new JSONObject();
                     jSONObject.put("json_object", jsonObject);
                     jSONObject.put("json_string", jsonString);
                     jSONObject.put("json_number", jsonNumber);
@@ -98,6 +105,14 @@ public class Server {
 
                     writer.write(jSONObject.toString());
                     writer.flush();
+                    
+                    jsonObjectMax += jsonObject;
+                    jsonStringMax += jsonString;
+                    jsonNumberMax += jsonNumber;
+                    jsonArrayMax += jsonArray;
+                    jsonBoolMax += jsonBool;
+                    jsonNullMax += jsonNull;
+                    errorCodeMax += errorCode;
 
                 } catch (IOException ex) {
                     errorCode++;

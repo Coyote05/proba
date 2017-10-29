@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.Map;
 import org.json.JSONObject;
 
 /**
@@ -36,8 +37,17 @@ public class Client {
 
         String line = reader.readLine();
         jSONObject = new JSONObject(line);
+        
+        System.out.println("{");
+        System.out.println("'response': {");
+        
+        for (Map.Entry<String, Object> entry : jSONObject.toMap().entrySet()) {
+        
+            System.out.println("\t\t'" + entry.getKey() + "': " + entry.getValue() + ",");
+        }
 
-        System.out.println("response: " + jSONObject.toString());
+        System.out.println("\t\t}");
+        System.out.println("}");
 
         socket.close();
     }
